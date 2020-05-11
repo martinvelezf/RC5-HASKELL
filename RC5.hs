@@ -6,12 +6,25 @@ main=do print test
 test = [y|let s=secretkey [1..4] 100,
 	   let x=encrp [0,0] s 100,
 		y<- desencrypt x s 100 100]
-		
-	
+
+
+encryption::[Int]->Int
+
 enc::[Int]->[Int]->Int->[Int]
 enc a s i=[ans|
 		let x=a!!0,
 	    let y=a!!1,
+		let m=s!!(i*2),
+		let m1=s!!((i*2)+1),	
+		let w =(rotateL (xor x y) y)+m,
+		let z= (rotateL (xor y w) w)+m1,
+		ans<-[w]++[z]
+        ] 
+			
+enc::[Int]->[Int]->Int->[Int]
+enc a s i=[ans|
+		let x=a!!0,
+	    	let y=a!!1,
 		let m=s!!(i*2),
 		let m1=s!!((i*2)+1),	
 		let w =(rotateL (xor x y) y)+m,
@@ -24,6 +37,9 @@ encrp a s r=[y|let x=[a!!0+s!!0]++[a!!1+s!!1],y<-sencrypt  x s 1 r]
 		
 encrypt::[Int]->Int->[Int]
 encrypt a r=[y|let s= secretkey [1..4] r,let x=[a!!0+s!!0]++[a!!1+s!!1],y<-sencrypt  x s 1 r]
+
+
+
 
 sencrypt::[Int]->[Int]->Int->Int->[Int]
 sencrypt a s i r
