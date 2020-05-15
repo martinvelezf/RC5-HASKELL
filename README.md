@@ -21,14 +21,14 @@ The frontend would use the following data types:
   1.  Error
   1.  Private
   1.  Incorrect
-1.  User
+2.  User
   1.  First name
   1.  Last name
   1.  Email
   1.  Birthday
   1.  Password
   1.  Occupation
-1.  Input
+3.  Input
   1.  Button
   1.  Selector
   1.  Text
