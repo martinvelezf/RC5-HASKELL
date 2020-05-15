@@ -16,22 +16,22 @@ The application frontend is based on a web server application designed with the 
 The frontend would use the following data types:
 1. Window
   1. Login
-  2. Registration
-  3. Registered
-  4. Error
-  5. Private
-  6. Incorrect
-2. User
+  1. Registration
+  1. Registered
+  1. Error
+  1. Private
+  1. Incorrect
+1. User
   1. First name
-  2. Last name
-  3. Email
-  4. Birthday
-  5. Password
-  6. Occupation
-3. Input
+  1. Last name
+  1. Email
+  1. Birthday
+  1. Password
+  1. Occupation
+1. Input
   1. Button
-  2. Selector
-  3. Text
+  1. Selector
+  1. Text
 
 
 ### Data Manipulation
