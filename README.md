@@ -20,6 +20,15 @@ For the momment use these credentials to login:
 
 This code is based in the Rivest implementation of 1995 in Haskell. The original paper can be found [here](/references/ivest1995_Chapter_TheRC5EncryptionAlgorithm.pdf).
 
+To run the code:
+1. Go to the module location: ```cd scr/modules/RC5 ```
+2. Start the interpreter: ```ghci RC5.hs ```
+3. To encrypt: ```x = encryption "mar" "123" 10 ```
+4. You should get the result as: ```[(-7273264081479612925,-3122923407712225928),(-625
+[(-7273264081479612925,-3122923407712225928),(-6256778535516941383,-1835156827000292027),(4196303171515540263,9185718333346717671)] ```
+5. The result has type: ``` List[(Int, Int)] ```
+6. To decrypt: ``` decrypt x 10 ```
+
 ### Frontend
 *Nicolas Serrano*
 
