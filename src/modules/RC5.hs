@@ -1,7 +1,9 @@
 module RC5 where
 import Key
 import EncDec as E
-
+import Data.List.Split
+import  Data.Text.Read 
+import qualified Data.Text as T
 convertListOfInt :: Enum a => [a] -> [Int]
 convertListOfInt s =map (fromEnum) s 
 
@@ -38,6 +40,15 @@ decryption x r= y where
     txt=map (E.decrypt s r) x
     y=convertToString txt
 
+
+convertencryptxt x= (p,q) where
+	y=unzip x	
+	p= T.pack $ init $concat $map (\x->(show x)++['x']) (fst y)
+	q=T.pack $ init $concat $map (\x->(show x)++['x']) (snd y)
+
+texttodecrypt p q=(x,y) where
+	x=map (\x->read x::Int) $splitOn "x" (T.unpack p)
+	y=map (\x->read x::Int) $splitOn "x" (T.unpack q)
 -------------------------------Correr en consola--------------------------------
 --x=encryption "sda" "sdd8" 4
 -- decryption x 4 
