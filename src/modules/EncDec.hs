@@ -1,6 +1,7 @@
 module EncDec where
 import Data.Bits as B
-encrypt ::  [Int]-> Int ->(Int, Int)-> (Int, Int)
+type Ans=(Int, Int)
+encrypt ::  [Int]-> Int ->Ans->Ans
 encrypt s r ab= x 
     where
     a=(fst ab)+s!!0
@@ -16,7 +17,7 @@ encrypt s r ab= x
     x=foldl f1 (a,b) (zip s2 s1) 
 
 
-decrypt ::[Int]-> Int ->(Int, Int)-> (Int, Int)
+decrypt ::[Int]-> Int ->Ans->Ans
 decrypt  s r ab = x
     where
     evenN=filter even [1..r]
