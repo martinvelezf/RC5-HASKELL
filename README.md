@@ -23,11 +23,18 @@ This code is based in the Rivest implementation of 1995 in Haskell. The original
 To run the code:
 1. Go to the module location: ```cd scr/modules/RC5 ```
 2. Start the interpreter: ```ghci RC5.hs ```
-3. To encrypt: ```x = encryption "mar" "123" 10 ```
+3. To encrypt: ```x = encryption "mar" "123" 10 [1..100]```
 4. You should get the result as: ```[(-7273264081479612925,-3122923407712225928),(-625
 [(-7273264081479612925,-3122923407712225928),(-6256778535516941383,-1835156827000292027),(4196303171515540263,9185718333346717671)] ```
 5. The result has type: ``` List[(Int, Int)] ```
-6. To decrypt: ``` decrypt x 10 ```
+6. To decrypt: ``` decrypt x 10 [1..100]```
+
+In case of get an encryption a decryption in Text, use the following functions:
+1. To encrypt: ```x =readytoencrypt "word1" "word2"
+```Expected output:>>x ("1225641636062539505x151454429113874280x-3651162783678895878x2720116480418127085x-7618532865284291349","8837152007312300700x-8727207976567962814x-4677416727520607510x5575231667255447601x6768283349087288632")```
+2. To dencrypt: ```readytodecrypt (fst x) (snd x)
+```Expected output:("word1","word2")```
+
 
 ### Frontend
 *Nicolas Serrano*
