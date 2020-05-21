@@ -40,7 +40,6 @@ decryption x r= y where
     txt=map (E.decrypt s r) x
     y=convertToString txt
 
-
 convertencryptxt x= (p,q) where
 	y=unzip x	
 	p= T.pack $ init $concat $map (\x->(show x)++['x']) (fst y)
