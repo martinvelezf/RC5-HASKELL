@@ -13,13 +13,12 @@ import Web.Spock.Config
 import Web.Spock.Lucid (lucid)
 import Lucid
 
-data User = User { firstName :: Text,
-                   lastName :: Text,
-                   email :: Text,
-                   birthday :: Text,
-                   password :: Text,
-                   occupation :: Text
-                 }
+import Modules.RC5
+import Modules.Datamng
+
+import System.IO
+import qualified Data.Text.IO as Textio
+
 newtype ServerState = ServerState { users :: IORef [User] }
 
 type Server a = SpockM () () ServerState a
@@ -55,7 +54,8 @@ app = do
   post "login" $ do
     email <- param' "email"
     password <- param' "password"
-    let userTuple = Text.concat[email,": ",password]
+    let x = readytoencrypt email password
+
     -- We should use RC5 here
     if email == "nicolas.serrano@yachaytech.edu.ec" && password == "encryptedpassword"
       then redirect "welcome/"
@@ -82,8 +82,18 @@ app = do
           br_ []
           br_ []
         label_ $ do
-          "Birthday: "
-          input_ [name_ "birthday"]
+          "Day: "
+          input_ [name_ "day"]
+          br_ []
+          br_ []
+        label_ $ do
+          "Month: "
+          input_ [name_ "month"]
+          br_ []
+          br_ []
+        label_ $ do
+          "Year: "
+          input_ [name_ "year"]
           br_ []
           br_ []
         label_ $ do
@@ -96,6 +106,11 @@ app = do
           input_ [name_ "occupation"]
           br_ []
           br_ []
+        label_ $ do
+          "User Type: "
+          input_ [name_ "userType"]
+          br_ []
+          br_ []
         input_ [type_ "submit", value_ "Create User"]
       br_ []
       a_ [href_ "/"] "Go back to the Homepage"
@@ -104,13 +119,24 @@ app = do
     firstName <- param' "firstName"
     lastName <- param' "lastName"
     email <- param' "email"
-    birthday <- param' "birthday"
+    day <- param' "day"
+    month <- param' "month"
+    year <- param' "year"
     password <- param' "password"
     occupation <- param' "occupation"
+    userType <- param' "userType"
+    let result = Text.concat[firstName,",",lastName,",",email,",",password,",",occupation]
+    let lista = [firstName,lastName,email,day,month,year,password,occupation,userType]
+
     userList <- users <$> getState
+    --Save the user in the database
+    --let usuario = listtoUser lista
+    --let dataout = userstofile userList ++ [usuario]
+    --in Textio.writeFile "/home/kiko/haskell/RC5-HASKELL/src/database.csv" dataout
+
+    --Save the user in the server state
     liftIO $ atomicModifyIORef' userList $ \user ->
-      (user <> [User firstName lastName email birthday password occupation], ())
-    let result = Text.concat[firstName,",",lastName,",",email,",",birthday,",",password,",",occupation]
+      (user <> [listtoUser lista], ())
     lucid $ do
       h1_ "User created"
 
@@ -120,14 +146,14 @@ app = do
       h1_ "Welcome to the Company Intranet"
       p_ "The registered users are:"
       ul_ $ forM_ users' $ \user -> li_ $ do
-        toHtml (firstName user)
-        ", "
-        toHtml(lastName user)
-        ", "
+      --  toHtml (firstName user)
+      --  ", "
+      --  toHtml(lastName user)
+      --  ", "
         toHtml(email user)
         ", "
-        toHtml(birthday user)
-        ", "
+      --  toHtml(birthday user)
+      --  ", "
         toHtml(password user)
         ", "
         toHtml(occupation user)
@@ -144,10 +170,9 @@ app = do
 
 main :: IO()
 main = do
+  datain <- Textio.readFile "/home/kiko/haskell/RC5-HASKELL/src/database.csv"
+  let userslist = filetoUsers datain
   initial_state <- ServerState <$>
-    newIORef [ User "Carlos" "Munoz" "carlos@yachay.edu.ec" "01/01/1995" "anencryptedpassword" "mathematician",
-               User "Nico" "Serrano" "nico@inno-maps.com" "22/12/1995" "anencryptedpassword" "student",
-               User "Martin" "Velez" "martin@yachay.edu.ec" "02/02/1995" "anencryptedpassword" "engineer"
-             ]
+    newIORef userslist
   cfg <- defaultSpockCfg () PCNoDatabase initial_state
   runSpock 8080 (spock cfg app)

@@ -1,8 +1,8 @@
-module EncDec where
+module Modules.EncDec where
 import Data.Bits as B
 type Ans=(Int, Int)
 encrypt ::  [Int]-> Int ->Ans->Ans
-encrypt s r ab= x 
+encrypt s r ab= x
     where
     a=(fst ab)+s!!0
     b=(snd ab)+s!!1
@@ -13,8 +13,8 @@ encrypt s r ab= x
     f1 (a,b) (s2,s1) = x where
         ax=(B.rotateL (B.xor a b) b )+s1
         bx=(B.rotateL (B.xor b ax) ax)+s2
-        x=(ax,bx)     
-    x=foldl f1 (a,b) (zip s2 s1) 
+        x=(ax,bx)
+    x=foldl f1 (a,b) (zip s2 s1)
 
 
 decrypt ::[Int]-> Int ->Ans->Ans
@@ -27,8 +27,7 @@ decrypt  s r ab = x
     f2 (a,b) (s2,s1) = x where
         bx=(B.xor (B.rotateR (b-s2) (a)) (a))
         ax=xor (rotateR (a-s1) bx) bx
-        x=(ax,bx) 
+        x=(ax,bx)
     y=foldl f2 ab (zip s2 s1)
-    
-    x=(( fst y) -s!!0,(snd y)-s!!1)
 
+    x=(( fst y) -s!!0,(snd y)-s!!1)
