@@ -132,7 +132,7 @@ app = do
     password <- param' "password"
     occupation <- param' "occupation"
     userType <- param' "userType"
-    let result = Text.concat[firstName,",",lastName,",",email,",",password,",",occupation]
+    --let result = Text.concat[firstName,",",lastName,",",email,",",password,",",occupation]
     let lista = [firstName,lastName,email,day,month,year,password,occupation,userType]
 
     --Save the user in the database NOT WORKING
