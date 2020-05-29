@@ -54,13 +54,20 @@ app = do
   post "login" $ do
     email <- param' "email"
     password <- param' "password"
-    let x = readytoencrypt email password
 
-    -- We should use RC5 here
-    if email == "nicolas.serrano@yachaytech.edu.ec" && password == "encryptedpassword"
+    users' <- getState >>= (liftIO . readIORef . users)
+    let x = readytoencrypt email password
+    let authUser = returnprivate x users'
+
+    if fst authUser
       then redirect "welcome/"
     else
       redirect "/failed"
+
+    --if email == "nicolas.serrano@yachaytech.edu.ec" && password == "encryptedpassword"
+      --then redirect "welcome/"
+    --else
+      --redirect "/failed"
 
   get "create" $ do
     lucid $ do
@@ -128,13 +135,14 @@ app = do
     let result = Text.concat[firstName,",",lastName,",",email,",",password,",",occupation]
     let lista = [firstName,lastName,email,day,month,year,password,occupation,userType]
 
-    userList <- users <$> getState
-    --Save the user in the database
-    --let usuario = listtoUser lista
-    --let dataout = userstofile userList ++ [usuario]
+    --Save the user in the database NOT WORKING
+    users' <- getState >>= (liftIO . readIORef . users)
+    let usuario = listtoUser lista
+    let dataout = userstofile (users' ++ [usuario])
     --in Textio.writeFile "/home/kiko/haskell/RC5-HASKELL/src/database.csv" dataout
 
     --Save the user in the server state
+    userList <- users <$> getState
     liftIO $ atomicModifyIORef' userList $ \user ->
       (user <> [listtoUser lista], ())
     lucid $ do
@@ -146,17 +154,19 @@ app = do
       h1_ "Welcome to the Company Intranet"
       p_ "The registered users are:"
       ul_ $ forM_ users' $ \user -> li_ $ do
-      --  toHtml (firstName user)
-      --  ", "
-      --  toHtml(lastName user)
-      --  ", "
+        toHtml (firstName(name(user)))
+        ", "
+        toHtml (lastName(name(user)))
+        ", "
         toHtml(email user)
         ", "
-      --  toHtml(birthday user)
-      --  ", "
-        toHtml(password user)
+        toHtml(day(birthday(user)))
+        "/"
+        toHtml(month(birthday(user)))
+        "/"
+        toHtml(year(birthday(user)))
         ", "
-        toHtml(occupation user)
+        toHtml(occupation user)        
       br_ []
       a_ [href_ "/"] "Go back to the Homepage"
 
