@@ -139,7 +139,7 @@ app = do
     users' <- getState >>= (liftIO . readIORef . users)
     let usuario = listtoUser lista
     let dataout = userstofile (users' ++ [usuario])
-    --in Textio.writeFile "/home/kiko/haskell/RC5-HASKELL/src/database.csv" dataout
+    --in Textio.writeFile "/home/kiko/haskell/RC5-HASKELL/src/Modules/database.csv" dataout
 
     --Save the user in the server state
     userList <- users <$> getState
@@ -166,7 +166,7 @@ app = do
         "/"
         toHtml(year(birthday(user)))
         ", "
-        toHtml(occupation user)        
+        toHtml(occupation user)
       br_ []
       a_ [href_ "/"] "Go back to the Homepage"
 
@@ -180,7 +180,7 @@ app = do
 
 main :: IO()
 main = do
-  datain <- Textio.readFile "/home/kiko/haskell/RC5-HASKELL/src/database.csv"
+  datain <- Textio.readFile "/home/kiko/haskell/RC5-HASKELL/src/Modules/database.csv"
   let userslist = filetoUsers datain
   initial_state <- ServerState <$>
     newIORef userslist
