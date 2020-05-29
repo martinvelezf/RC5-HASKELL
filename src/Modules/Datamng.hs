@@ -107,3 +107,7 @@ returnprivate _ []= (False,defaultuser)
 returnprivate (encrypemail,encryppass) (usr:lst) = if ((encrypemail==email(usr)) && (encryppass==password(usr)))
                                                  then (True, usr)
                                                  else (returnprivate (encrypemail,encryppass) lst)
+--Removes default users
+removedefault :: [User]->[User]
+removedefault [] = []
+removedefault (usr:lst) = if (email(usr) == "default") then (removedefault lst) else ([usr] ++ (removedefault lst))
