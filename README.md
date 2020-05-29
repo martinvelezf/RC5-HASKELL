@@ -63,11 +63,11 @@ The frontend would use the following data types:
 
 The Data Management module is devoted to extract information from the database (*a .csv file*), manipulate it and write it down again. To do so it follows the following procedure:
 
-1. Parsing the information from the database through Data.Text.IO.readFile.
-2. Decoding the data as a list of Text strings.
-2. Creating a list of User data type from the decoded data.
-3. Encoding the modified list of Users into a Text string
-4. Writing the encoded data in database through Data.Text.IO.writeFile.
+1. Parsing the information from the database through ```Data.Text.IO.readFile.```
+2. Decoding the data as a list of **```User```** data type.
+3. Manipulation of  data is posible at this stage using e.g ```returnprivate```, ```removedefault```, ```getusertype```.
+4. Encoding the modified list of Users into a Text string
+5. Writing the encoded data in database through ```Data.Text.IO.writeFile```.
 
 ## Contact
 If you have a question, comment or improvement; please feel free to reach out by posting an issue.
