@@ -61,7 +61,7 @@ The frontend would use the following data types:
 ### Data Manipulation
 *Carlos Munoz*
 
-The Data Management module is devoted to extract information from the database (*a .csv file*), manipulate it and write it on the database. To do so it follows the following procedure:
+The Data Management module is devoted to extract information from the database (*a .csv file*), manipulate it and write it down again. To do so it follows the following procedure:
 
 1. Parsing the information from the database through Data.Text.IO.readFile.
 2. Decoding the data as a list of Text strings.
