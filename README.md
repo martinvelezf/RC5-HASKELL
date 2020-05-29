@@ -2,14 +2,14 @@
 Welcome to our RC5-Haskell repository. This project was develop for our Functional Programming class at [Yachay Tech](https://www.yachaytech.edu.ec/). Please be aware that the code was develop for a class project and is not 100% secure for use at a production environment.
 
 ## Description
-This project is aim to build a simple company login system using the RC5 encryption for authentication and a web server for the application itself. All new libraries added should be included in the *application.cabal* file. In order to test the code in your computer remember to run:
+This project is aim to build a simple company login system using the RC5 encryption for authentication and a web server for the application itself. All new libraries added should be included in the *application.cabal* file. **Remember to change the database.csv directory for one that suits your computer.** In order to test the code in your computer remember to run:
 ```bash
 cabal update && cabal install ghcid
 git clone https://github.com/martinvelezf/RC5-HASKELL.git
 cabal install --only-dependencies
 ghcid -T :main
 ```
-If *ghcid* is installed but you cannot find it, try to locate it in the following folder ```/home/USERNAME/.cabal/bin/ghcid```. Go to [http://localhost:8080/](http://localhost:8080/) in any browser in your computer to use the application
+If *ghcid* is installed but you cannot find it, try to locate it in the following folder ```/home/USERNAME/.cabal/bin/ghcid```. Go to [http://localhost:8080/](http://localhost:8080/) in any browser in your computer to use the application.
 
 For the momment use these credentials to login:
 +  email: nicolas.serrano@yachaytech.edu.ec

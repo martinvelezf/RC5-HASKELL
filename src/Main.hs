@@ -139,7 +139,7 @@ app = do
     users' <- getState >>= (liftIO . readIORef . users)
     let usuario = listtoUser lista
     let dataout = userstofile (users' ++ [usuario])
-    --in Textio.writeFile "/home/kiko/haskell/RC5-HASKELL/src/Modules/database.csv" dataout
+      --in Textio.writeFile "/home/kiko/haskell/RC5-HASKELL/src/Modules/database.csv" dataout
 
     --Save the user in the server state
     userList <- users <$> getState
