@@ -59,15 +59,15 @@ app = do
     let x = readytoencrypt email password
     let authUser = returnprivate x users'
 
-    if fst authUser
-      then redirect "welcome/"
-    else
-      redirect "/failed"
-
-    --if email == "nicolas.serrano@yachaytech.edu.ec" && password == "encryptedpassword"
+    --if fst authUser
       --then redirect "welcome/"
     --else
       --redirect "/failed"
+
+    if email == "nicolas.serrano@yachaytech.edu.ec" && password == "encryptedpassword"
+      then redirect "welcome/"
+    else
+      redirect "/failed"
 
   get "create" $ do
     lucid $ do
@@ -132,14 +132,18 @@ app = do
     password <- param' "password"
     occupation <- param' "occupation"
     userType <- param' "userType"
-    --let result = Text.concat[firstName,",",lastName,",",email,",",password,",",occupation]
-    let lista = [firstName,lastName,email,day,month,year,password,occupation,userType]
+
+    let encrypted_email = readytoencrypt email password
+
+    let lista = [firstName,lastName,fst encrypted_email,day,month,year,snd encrypted_email,occupation,userType]
+    let usuario = listtoUser lista
 
     --Save the user in the database NOT WORKING
     users' <- getState >>= (liftIO . readIORef . users)
-    let usuario = listtoUser lista
-    let dataout = userstofile (users' ++ [usuario])
-      --in Textio.writeFile "/home/kiko/haskell/RC5-HASKELL/src/Modules/database.csv" dataout
+    let dataout = userstofile( removedefault (users' ++ [usuario]) )
+    let result = writeFileWeb dataout
+    --out = Textio.writeFile "/home/kiko/haskell/RC5-HASKELL/src/Modules/database.csv" "dataout"
+
 
     --Save the user in the server state
     userList <- users <$> getState

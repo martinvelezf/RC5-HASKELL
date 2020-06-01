@@ -7,6 +7,7 @@ module Modules.Datamng where
 --import Data.List.Split
 import Data.Text (Text)
 import qualified Data.Text as T
+import qualified Data.Text.IO as Textio
 
 data User =
    User { name :: Name,
@@ -111,3 +112,8 @@ returnprivate (encrypemail,encryppass) (usr:lst) = if ((encrypemail==email(usr))
 removedefault :: [User]->[User]
 removedefault [] = []
 removedefault (usr:lst) = if (email(usr) == "default") then (removedefault lst) else ([usr] ++ (removedefault lst))
+
+--writeFileWeb :: Text -> IO()
+--writeFileWeb (dataout) = print $ show $ Textio.writeFile "/home/kiko/haskell/RC5-HASKELL/src/Modules/database1.csv" dataout
+writeFileWeb (dataout) = do
+  print 12
