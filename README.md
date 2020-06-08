@@ -12,7 +12,7 @@ ghcid -T :main
 ```
 If *ghcid* is installed but you cannot find it, try to locate it in the following folder ```/home/USERNAME/.cabal/bin/ghcid```.
 
-Or you could build the application using cabal:
+Or you could build the application using cabal in the top directory ```/RC5-HASKELL```:
 ```bash
 cabal build
 ```
