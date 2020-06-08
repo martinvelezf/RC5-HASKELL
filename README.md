@@ -6,10 +6,22 @@ This project is aim to build a simple company login system using the RC5 encrypt
 ```bash
 cabal update && cabal install ghcid
 git clone https://github.com/martinvelezf/RC5-HASKELL.git
+cd RC5-HASKELL
 cabal install --only-dependencies
 ghcid -T :main
 ```
-If *ghcid* is installed but you cannot find it, try to locate it in the following folder ```/home/USERNAME/.cabal/bin/ghcid```. Go to [http://localhost:8080/](http://localhost:8080/) in any browser in your computer to use the application.
+If *ghcid* is installed but you cannot find it, try to locate it in the following folder ```/home/USERNAME/.cabal/bin/ghcid```.
+
+Or you could build the application using cabal:
+```bash
+cabal build
+```
+After the building process is complete, execute the application file in the build directory:
+```bash
+./ /RC5-HASKELL/dist/build/application/application
+```
+
+Go to [http://localhost:8080/](http://localhost:8080/) in any browser in your computer to use the application.
 
 For the momment use these credentials to login:
 +  email: nicolas.serrano@yachaytech.edu.ec

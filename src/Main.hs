@@ -19,6 +19,8 @@ import Modules.Datamng
 import System.IO
 import qualified Data.Text.IO as Textio
 
+import Control.DeepSeq
+
 newtype ServerState = ServerState { users :: IORef [User] }
 
 type Server a = SpockM () () ServerState a
@@ -140,9 +142,12 @@ app = do
 
     --Save the user in the database NOT WORKING
     users' <- getState >>= (liftIO . readIORef . users)
-    let dataout = userstofile( removedefault (users' ++ [usuario]) )
-    let result = writeFileWeb dataout
-    --out = Textio.writeFile "/home/kiko/haskell/RC5-HASKELL/src/Modules/database.csv" "dataout"
+    --let dataout = userstofile( removedefault (users' ++ [usuario]) )
+    let dataout = "Nico"
+    --let pureresult = (Textio.writeFile "database1.csv") `deepseq` dataout
+    --pureresult <- result
+
+    --let result = (Textio.writeFile "/home/kiko/haskell/RC5-HASKELL/src/Modules/database1.csv") `deepseq` dataout
 
 
     --Save the user in the server state

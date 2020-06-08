@@ -17,7 +17,7 @@ cabal-version:       >=1.10
 
 executable application
   main-is:             Main.hs
-  -- other-modules:
+  other-modules:       Modules.Datamng Modules.EncDec Modules.Key Modules.RC5
   -- other-extensions:
   build-depends:       base >=4.12 && <4.13
                       , Spock
@@ -27,5 +27,6 @@ executable application
                       , lucid
                       , Spock-lucid
                       , split
+                      , deepseq
   hs-source-dirs:      src
   default-language:    Haskell2010

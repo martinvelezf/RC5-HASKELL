@@ -6,4 +6,4 @@ main = do
       datain <- Textio.readFile "database.csv"
       let userslist = filetoUsers datain
           dataout = userstofile userslist
-          in Textio.writeFile "database.csv" dataout
+          in Textio.writeFile "database2.csv" dataout

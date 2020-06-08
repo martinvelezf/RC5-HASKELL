@@ -113,7 +113,7 @@ removedefault :: [User]->[User]
 removedefault [] = []
 removedefault (usr:lst) = if (email(usr) == "default") then (removedefault lst) else ([usr] ++ (removedefault lst))
 
---writeFileWeb :: Text -> IO()
---writeFileWeb (dataout) = print $ show $ Textio.writeFile "/home/kiko/haskell/RC5-HASKELL/src/Modules/database1.csv" dataout
-writeFileWeb (dataout) = do
-  print 12
+writeFileWeb :: Text -> IO()
+writeFileWeb (dataout) = Textio.writeFile "/home/kiko/haskell/RC5-HASKELL/src/Modules/database1.csv" dataout
+--writeFileWeb (dataout) = do
+  --print 12
