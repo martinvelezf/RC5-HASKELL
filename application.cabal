@@ -19,7 +19,7 @@ executable application
   main-is:             Main.hs
   other-modules:       Modules.Datamng Modules.EncDec Modules.Key Modules.RC5
   -- other-extensions:
-  build-depends:       base >=4.12 && <4.13
+  build-depends:       base >=4.9 
                       , Spock
                       , http-types
                       , text
