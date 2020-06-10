@@ -19,8 +19,6 @@ import Modules.Datamng
 import System.IO
 import qualified Data.Text.IO as Textio
 
-import Control.DeepSeq
-
 newtype ServerState = ServerState { users :: IORef [User] }
 
 type Server a = SpockM () () ServerState a
@@ -60,13 +58,16 @@ app = do
     users' <- getState >>= (liftIO . readIORef . users)
     let x = readytoencrypt email password
     let authUser = returnprivate x users'
+    --let a = snd authUser
+    let writeUser = usertocsv (snd authUser)
 
     if fst authUser
       then lucid $ do
         h1_ "Welcome to the Company Intranet"
         p_ "The registered users are:"
         br_ []
-        --Insert info from snd authUser
+        toHtml(writeUser)
+        br_ []
         a_ [href_ "/"] "Go back to the Homepage"
     else
       redirect "/failed"
