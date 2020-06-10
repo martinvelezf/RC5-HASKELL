@@ -61,13 +61,18 @@ app = do
     let x = readytoencrypt email password
     let authUser = returnprivate x users'
 
-    --if fst authUser
+    if fst authUser
       --then redirect "welcome/"
+      then lucid $ do
+        h1_ "Welcome to the Company Intranet"
+        p_ "The registered users are:"
+        br_ []
+        a_ [href_ "/"] "Go back to the Homepage"
     --else
       --redirect "/failed"
 
-    if email == "nicolas.serrano@yachaytech.edu.ec" && password == "encryptedpassword"
-      then redirect "welcome/"
+    --if email == "nicolas.serrano@yachaytech.edu.ec" && password == "encryptedpassword"
+      --then redirect "welcome/"
     else
       redirect "/failed"
 
@@ -142,20 +147,15 @@ app = do
 
     --Save the user in the database NOT WORKING
     users' <- getState >>= (liftIO . readIORef . users)
-    --let dataout = userstofile( removedefault (users' ++ [usuario]) )
-    let dataout = "Nico"
-    --let pureresult = (Textio.writeFile "database1.csv") `deepseq` dataout
-    --pureresult <- result
-
-    --let result = (Textio.writeFile "/home/kiko/haskell/RC5-HASKELL/src/Modules/database1.csv") `deepseq` dataout
-
+    let dataout = userstofile( removedefault (users' ++ [usuario]) )
+    liftIO $ Textio.writeFile "database1.csv" dataout
 
     --Save the user in the server state
     userList <- users <$> getState
     liftIO $ atomicModifyIORef' userList $ \user ->
       (user <> [listtoUser lista], ())
     lucid $ do
-      h1_ "User created"
+      h1_ "User created"   
 
   get "welcome" $ do
     users' <- getState >>= (liftIO . readIORef . users)
@@ -189,7 +189,7 @@ app = do
 
 main :: IO()
 main = do
-  datain <- Textio.readFile "/home/kiko/haskell/RC5-HASKELL/src/Modules/database.csv"
+  datain <- Textio.readFile "/home/martin/Desktop/RC5-HASKELL/src/Modules/database.csv"
   let userslist = filetoUsers datain
   initial_state <- ServerState <$>
     newIORef userslist
