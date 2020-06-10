@@ -1,2 +1,7 @@
 .vscode/
-dist/
+dist/cabal-config-flags
+dist/setup-config
+dist/package.conf.inplace/
+dist/build/application/application-tmp/
+dist/build/application/autogen/
+dist/build/application/application

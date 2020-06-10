@@ -62,17 +62,12 @@ app = do
     let authUser = returnprivate x users'
 
     if fst authUser
-      --then redirect "welcome/"
       then lucid $ do
         h1_ "Welcome to the Company Intranet"
         p_ "The registered users are:"
         br_ []
+        --Insert info from snd authUser
         a_ [href_ "/"] "Go back to the Homepage"
-    --else
-      --redirect "/failed"
-
-    --if email == "nicolas.serrano@yachaytech.edu.ec" && password == "encryptedpassword"
-      --then redirect "welcome/"
     else
       redirect "/failed"
 
@@ -102,7 +97,19 @@ app = do
           br_ []
         label_ $ do
           "Month: "
-          input_ [name_ "month"]
+          select_ [name_ "month"] $ do
+            option_ [value_ "January"] "January"
+            option_ [value_ "Febraury"] "Febraury"
+            option_ [value_ "March"] "March"
+            option_ [value_ "April"] "April"
+            option_ [value_ "May"] "May"
+            option_ [value_ "June"] "June"
+            option_ [value_ "July"] "July"
+            option_ [value_ "August"] "August"
+            option_ [value_ "September"] "September"
+            option_ [value_ "October"] "October"
+            option_ [value_ "November"] "November"
+            option_ [value_ "December"] "December"
           br_ []
           br_ []
         label_ $ do
@@ -122,7 +129,11 @@ app = do
           br_ []
         label_ $ do
           "User Type: "
-          input_ [name_ "userType"]
+          select_ [name_ "userType"] $ do
+            option_ [value_ "Customer"] "Customer"
+            option_ [value_ "Employee"] "Employee"
+            option_ [value_ "Administrative"] "Administrative"
+            option_ [value_ "Other"] "Other"
           br_ []
           br_ []
         input_ [type_ "submit", value_ "Create User"]
@@ -148,14 +159,17 @@ app = do
     --Save the user in the database NOT WORKING
     users' <- getState >>= (liftIO . readIORef . users)
     let dataout = userstofile( removedefault (users' ++ [usuario]) )
-    liftIO $ Textio.writeFile "database1.csv" dataout
+    liftIO $ Textio.writeFile "database.csv" dataout
 
     --Save the user in the server state
     userList <- users <$> getState
     liftIO $ atomicModifyIORef' userList $ \user ->
       (user <> [listtoUser lista], ())
     lucid $ do
-      h1_ "User created"   
+      h1_ "User created"
+      br_ []
+      a_ [href_ "/"] "Go back to the Homepage"
+
 
   get "welcome" $ do
     users' <- getState >>= (liftIO . readIORef . users)
@@ -189,7 +203,7 @@ app = do
 
 main :: IO()
 main = do
-  datain <- Textio.readFile "/home/martin/Desktop/RC5-HASKELL/src/Modules/database.csv"
+  datain <- Textio.readFile "database.csv"
   let userslist = filetoUsers datain
   initial_state <- ServerState <$>
     newIORef userslist
