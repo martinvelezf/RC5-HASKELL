@@ -64,7 +64,7 @@ app = do
     if fst authUser
       then lucid $ do
         h1_ "Welcome to the Company Intranet"
-        p_ "The registered users are:"
+        p_ "Your user is:"
         br_ []
         toHtml(writeUser)
         br_ []
@@ -168,29 +168,6 @@ app = do
       (user <> [listtoUser lista], ())
     lucid $ do
       h1_ "User created"
-      br_ []
-      a_ [href_ "/"] "Go back to the Homepage"
-
-
-  get "welcome" $ do
-    users' <- getState >>= (liftIO . readIORef . users)
-    lucid $ do
-      h1_ "Welcome to the Company Intranet"
-      p_ "The registered users are:"
-      ul_ $ forM_ users' $ \user -> li_ $ do
-        toHtml (firstName(name(user)))
-        ", "
-        toHtml (lastName(name(user)))
-        ", "
-        toHtml(email user)
-        ", "
-        toHtml(day(birthday(user)))
-        "/"
-        toHtml(month(birthday(user)))
-        "/"
-        toHtml(year(birthday(user)))
-        ", "
-        toHtml(occupation user)
       br_ []
       a_ [href_ "/"] "Go back to the Homepage"
 
