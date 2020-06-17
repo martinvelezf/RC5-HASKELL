@@ -40,18 +40,19 @@ decryption x r= y where
     txt=map (E.decrypt s r) x
     y=convertToString txt
 
-
+convertencryptxt:: (Show a, Show b) => [(a, b)] -> (T.Text, T.Text)
 convertencryptxt x= (p,q) where
   y=unzip x
   p= T.pack $ init $concat $map (\x->(show x)++['x']) (fst y)
   q=T.pack $ init $concat $map (\x->(show x)++['x']) (snd y)
 
-
+texttodecrypt :: T.Text -> T.Text -> [(Int, Int)]
 texttodecrypt p q=z where
   x=map (\x->read x::Int) $splitOn "x" (T.unpack p)
   y=map (\x->read x::Int) $splitOn "x" (T.unpack q)
   z=zip x y
 
+readytodecrypt :: T.Text -> T.Text -> ([Char], [Char])
 readytoencrypt a b= convertencryptxt $encryption a b 10
 readytodecrypt a b= decryption (texttodecrypt a b) 10
 
